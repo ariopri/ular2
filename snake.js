@@ -7,6 +7,7 @@ const snake = {
     direction: 'right',
     body: [],
     apel1:[],
+    apel2:[],
 }
 const fps = 5
 const snakeWallCollistion = false
@@ -61,6 +62,14 @@ function update() {
             y: Math.floor(Math.random() * grid.row),
         }
         snake.apel1.push(randPos)
+        console.log(randPos)
+    }
+    else if (snake.apel2.length == 0) {
+        const randPos = {
+            x: Math.floor(Math.random() * grid.col),
+            y: Math.floor(Math.random() * grid.row),
+        }
+        snake.apel2.push(randPos)
         console.log(randPos)
     }
     // snake move
@@ -124,6 +133,16 @@ function update() {
             console.log('Score : ${score}' )
         }
     }
+    
+    for (var i = 0; i < snake.apel2.length; i++) {
+        const apel2 = snake.apel2[i]
+        if (apel2.x == newHead.x && apel2.y == newHead.y) {
+            snake.apel2.splice(i,1)
+            score++;
+            ularmakan = false
+            console.log('Score : ${score}' )
+        }
+    }
 
     //
     snake.body.unshift(newHead)
@@ -136,6 +155,7 @@ function draw() {
     drawBoard()
     drawSnake()
     drawapel1()
+    drawapel2()
 
 }
 //
@@ -171,6 +191,18 @@ function drawapel1() {
         var h = canvasSize.height / grid.row
         var x = apel1.x * w
         var y = apel1.y * h
+      
+        drawRect(x, y, w, h, "red", "black")
+          
+    }
+}
+function drawapel2() {
+    for (var i = 0; i < snake.apel2.length; i++){
+        const apel2 = snake.apel2[i]
+        var w = canvasSize.width / grid.col
+        var h = canvasSize.height / grid.row
+        var x = apel2.x * w
+        var y = apel2.y * h
       
         drawRect(x, y, w, h, "red", "black")
           
